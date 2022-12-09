@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-export default function UserPage() {
+export default function UserPage({ isAuth }) {
     const [user, setUser] = useState([]); // state to handle the data (user)
     const params = useParams();
     const url = `https://race-crud-rest-default-rtdb.firebaseio.com/users/${params.id}.json`;
@@ -45,10 +45,14 @@ export default function UserPage() {
                     <p>
                         <a href={`mailto: ${user.mail}`}>{user.mail}</a> | <a href={`tel: ${user.phone}`}>{user.phone}</a>
                     </p>
-                    <button onClick={showUpdate}>Update user</button>
-                    <button className="btn-outline" onClick={showDeleteDialog}>
-                        Delete user
-                    </button>
+                    {isAuth && (
+                        <>
+                            <button onClick={showUpdate}>Update user</button>
+                            <button className="btn-outline" onClick={showDeleteDialog}>
+                                Delete user
+                            </button>
+                        </>
+                    )}
                 </section>
             </article>
         </section>
